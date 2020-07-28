@@ -1,6 +1,3 @@
-[submodule "tools-indic"]
-	path = tools-indic
-	url = https://gitlab.com/indicproject/Indic-Keyboard-tools.git
 [submodule "dictionaries-indic"]
 	path = dictionaries-indic
 	url = https://gitlab.com/indicproject/dictionaries.git
