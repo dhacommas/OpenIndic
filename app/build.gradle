@@ -1,22 +1,5 @@
 project.ext.set("archivesBaseName", "IndicKeyboard");
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
-    }
-}
-
 apply plugin: 'com.android.application'
 
 dependencies {
@@ -25,12 +8,19 @@ dependencies {
     implementation project(':ime')
 }
 
+Properties localProps = new Properties()
+File localPropsFile = project.rootProject.file('local.properties')
+if (localPropsFile.exists()) {
+	localProps.load(localPropsFile.newDataInputStream())
+}
+
 android {
     compileSdkVersion 28
     buildToolsVersion '29.0.2'
+	ndkVersion "21.3.6528147"
 
     defaultConfig {
-        applicationId "org.smc.inputmethod.indic"
+        applicationId "org.boxit.ime.indic"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 48
@@ -50,7 +40,7 @@ android {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['../java-overridable/src', 'src', '../common/src', '../inputmethodcommon/java']
-            jniLibs.srcDirs = ['jniLibs']
+            //jniLibs.srcDirs = ['jniLibs']
             resources.srcDirs = ['src']
             aidl.srcDirs = ['src']
             renderscript.srcDirs = ['src']
@@ -64,19 +54,26 @@ android {
         noCompress ".dict"
     }
 
-    signingConfigs {
-        release {
-            storeFile file(String.valueOf(System.getenv("INDIC_KEYSTORE")))
-            storePassword System.getenv("INDIC_KEYSTORE_PASSWORD")
-            keyAlias System.getenv("INDIC_KEY_ALIAS")
-            keyPassword System.getenv("INDIC_KEY_PASSWORD")
-        }
-    }
+	signingConfigs {
+		release {
+			storeFile file(localProps.getProperty("storeFile"))
+			storePassword localProps.getProperty("storePass")
+			keyAlias localProps.getProperty("keyAlias")
+			keyPassword localProps.getProperty("keyPass")
+		}
+	}
+	
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
+        }
+    }
+	
+    externalNativeBuild {
+        ndkBuild {
+            path 'native/jni/Android.mk'
         }
     }
 
