@@ -1,4 +1,4 @@
-project.ext.set("archivesBaseName", "IndicKeyboard");
+project.ext.set("archivesBaseName", "BoxItIMEindic");
 
 apply plugin: 'com.android.application'
 
@@ -23,8 +23,8 @@ android {
         applicationId "org.boxit.ime.indic"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 48
-        versionName "3.1"
+        versionCode 10
+        versionName "r1"
     }
 
     splits {
@@ -71,6 +71,14 @@ android {
         }
     }
 	
+    flavorDimensions "version"
+    productFlavors {
+        snapshot {
+            applicationIdSuffix ".snapshot"
+            versionNameSuffix "-SNAPSHOT"
+        }
+    }
+
     externalNativeBuild {
         ndkBuild {
             path 'native/jni/Android.mk'

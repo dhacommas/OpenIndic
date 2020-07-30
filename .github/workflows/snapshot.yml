@@ -1,0 +1,51 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+
+name: Build snapshot
+jobs:
+  build-and-deploy-snapshot:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: set up signing configs
+      run: chmod +x release/setup.sh && release/setup.sh "$KEY"
+      env:
+        KEY: ${{ secrets.KEY }}
+
+    - name: Gradle cache 
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Build snapshot
+      run: chmod +x gradlew ; ./gradlew assembleSnapshotRelease
+
+    - name: clean up signing configs
+      if: always()
+      run: chmod +x release/cleanup.sh && release/cleanup.sh
+
+    - name: Upload artifect
+      uses: actions/upload-artifact@v2
+      with:
+        name: BoxIt-IME-Indic
+        path: app/build/outputs/apk/snapshot/release/BoxItIMEindic-snapshot-arm64-v8a-release.apk
+
+    - name: Deploy to Telegram
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: BoxIt-IME-Indic
+        document: app/build/outputs/apk/snapshot/release/BoxItIMEindic-snapshot-arm64-v8a-release.apk
