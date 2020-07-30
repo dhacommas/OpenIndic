@@ -1,8 +1,8 @@
 on:
   pull_request:
   push:
-    branches-ignore:
-      - release
+    branches:
+      - develop
 
 name: Build snapshot
 jobs:
@@ -40,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: BoxIt-IME-Indic
-        path: app/build/outputs/apk/snapshot/release/*.apk
+        path: app/build/outputs/apk/snapshot/release/BoxItIMEindic-snapshot-arm64-v8a-release.apk
 
     - name: Deploy to Telegram
       uses: appleboy/telegram-action@master
@@ -48,4 +48,4 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: BoxIt-IME-Indic
-        document: app/build/outputs/apk/snapshot/release/*.apk
+        document: app/build/outputs/apk/snapshot/release/BoxItIMEindic-snapshot-arm64-v8a-release.apk
