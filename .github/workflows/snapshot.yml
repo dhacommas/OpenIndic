@@ -1,8 +1,8 @@
 on:
   pull_request:
   push:
-    branches:
-      - !release
+    branches-ignore:
+      - release
 
 name: Build snapshot
 jobs:
