@@ -6,7 +6,7 @@ on:
 
 name: Build snapshot
 jobs:
-  Build and Deploy snapshot:
+  build-and-deploy-snapshot:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
