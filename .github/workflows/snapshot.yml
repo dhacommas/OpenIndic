@@ -21,7 +21,7 @@ jobs:
         KEY: ${{ secrets.KEY }}
 
     - name: Generate cache key
-      run: ./.github/checksum.sh checksum.txt
+      run: chmod +x .github/checksum.sh && ./.github/checksum.sh checksum.txt
 
     - name: Cache gradle modules
       uses: actions/cache@v2
