@@ -40,7 +40,7 @@ android {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['../java-overridable/src', 'src', '../common/src', '../inputmethodcommon/java']
-            //jniLibs.srcDirs = ['jniLibs']
+            jniLibs.srcDirs = ['jniLibs']
             resources.srcDirs = ['src']
             aidl.srcDirs = ['src']
             renderscript.srcDirs = ['src']
@@ -79,11 +79,11 @@ android {
         }
     }
 
-    externalNativeBuild {
+/*    externalNativeBuild {
         ndkBuild {
             path 'native/jni/Android.mk'
         }
-    }
+    } */
 
     lintOptions {
         checkReleaseBuilds false
