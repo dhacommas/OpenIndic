@@ -78,13 +78,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: OpenIndic arm64-v8a Release apk
-          path: artifacts
+          path: artifacts/OpenIndic
 
       - name: Get OpenIndic armeabi-v7a Release apk
         uses: actions/download-artifact@v2
         with:
           name: OpenIndic armeabi-v7a Release apk
-          path: artifacts
+          path: artifacts/OpenIndic
 
       - name: Get Changelog Entry
         id: changelog_reader
@@ -115,7 +115,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/OpenIndic-arm64-v8a-release.apk
+          asset_path: ./artifacts/OpenIndic/OpenIndic-arm64-v8a-release.apk
           asset_name: OpenIndic-${{ steps.get_version.outputs.VERSION }}_arm64-v8a.apk
           asset_content_type: application/vnd.android.package-archive
 
@@ -125,6 +125,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/OpenIndic-armeabi-v7a-release.apk
+          asset_path: ./artifacts/OpenIndic/OpenIndic-armeabi-v7a-release.apk
           asset_name: OpenIndic-${{ steps.get_version.outputs.VERSION }}_armeabi-v7a.apk
           asset_content_type: application/vnd.android.package-archive

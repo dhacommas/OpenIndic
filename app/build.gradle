@@ -71,13 +71,13 @@ android {
         }
     }
 	
-    flavorDimensions "version"
+/*    flavorDimensions "version"
     productFlavors {
         snapshot {
             applicationIdSuffix ".snapshot"
             versionNameSuffix "-SNAPSHOT"
         }
-    }
+    } */
 
 /*    externalNativeBuild {
         ndkBuild {

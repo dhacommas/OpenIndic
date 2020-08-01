@@ -48,7 +48,7 @@ jobs:
           ${{ runner.os }}-gradlebuildcache-
 
     - name: Build snapshot
-      run: chmod +x gradlew ; ./gradlew assembleSnapshotRelease
+      run: chmod +x gradlew ; ./gradlew :app:assembleRelease
 
     - name: clean up signing configs
       if: always()
@@ -58,7 +58,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: OpenIndic Snapshot apk
-        path: app/build/outputs/apk/snapshot/release/OpenIndic-snapshot-arm64-v8a-release.apk
+        path: app/build/outputs/apk/release/OpenIndic-arm64-v8a-release.apk
 
     - name: Deploy to Telegram
       uses: appleboy/telegram-action@master
@@ -66,4 +66,4 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: OpenIndic Snapshot apk
-        document: app/build/outputs/apk/snapshot/release/OpenIndic-snapshot-arm64-v8a-release.apk
+        document: app/build/outputs/apk/release/OpenIndic-arm64-v8a-release.apk
