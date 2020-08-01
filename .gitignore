@@ -35,9 +35,3 @@ temp/
 *.DS_Store
 *.patch
 *.diff
-
-# Signing files
-.signing/
-keystore.*
-*.jks
-*.keystore
