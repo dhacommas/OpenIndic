@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 - New package name
 
 ## [0]
--Initial release
+- Initial release
 
 [Unreleased]: https://github.com/dhavalgoti24/OpenIndic/compare/0...HEAD
 
