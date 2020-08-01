@@ -1,4 +1,4 @@
-project.ext.set("archivesBaseName", "BoxItIMEindic");
+project.ext.set("archivesBaseName", "OpenIndic");
 
 apply plugin: 'com.android.application'
 
@@ -20,7 +20,7 @@ android {
 	ndkVersion "21.3.6528147"
 
     defaultConfig {
-        applicationId "org.boxit.ime.indic"
+        applicationId "org.openindic"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 10
@@ -65,7 +65,7 @@ android {
 	
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
         }
