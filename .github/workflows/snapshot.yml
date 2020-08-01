@@ -57,13 +57,13 @@ jobs:
     - name: Upload artifect
       uses: actions/upload-artifact@v2
       with:
-        name: BoxIt-IME-Indic
-        path: app/build/outputs/apk/snapshot/release/BoxItIMEindic-snapshot-arm64-v8a-release.apk
+        name: OpenIndic Snapshot apk
+        path: app/build/outputs/apk/snapshot/release/OpenIndic-snapshot-arm64-v8a-release.apk
 
     - name: Deploy to Telegram
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: BoxIt-IME-Indic
-        document: app/build/outputs/apk/snapshot/release/BoxItIMEindic-snapshot-arm64-v8a-release.apk
+        message: OpenIndic Snapshot apk
+        document: app/build/outputs/apk/snapshot/release/OpenIndic-snapshot-arm64-v8a-release.apk
