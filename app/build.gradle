@@ -1,4 +1,4 @@
-project.ext.set("archivesBaseName", "IndicKeyboard");
+project.ext.set("archivesBaseName", "OpenIndic");
 
 apply plugin: 'com.android.application'
 
@@ -20,11 +20,11 @@ android {
 	ndkVersion "21.3.6528147"
 
     defaultConfig {
-        applicationId "org.boxit.ime.indic"
+        applicationId "org.openindic"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 48
-        versionName "3.1"
+        versionCode 10
+        versionName "r1"
     }
 
     splits {
@@ -40,7 +40,7 @@ android {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['../java-overridable/src', 'src', '../common/src', '../inputmethodcommon/java']
-            //jniLibs.srcDirs = ['jniLibs']
+            jniLibs.srcDirs = ['jniLibs']
             resources.srcDirs = ['src']
             aidl.srcDirs = ['src']
             renderscript.srcDirs = ['src']
@@ -65,17 +65,25 @@ android {
 	
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
         }
     }
 	
-    externalNativeBuild {
+    flavorDimensions "version"
+    productFlavors {
+        snapshot {
+            applicationIdSuffix ".snapshot"
+            versionNameSuffix "-SNAPSHOT"
+        }
+    }
+
+/*    externalNativeBuild {
         ndkBuild {
             path 'native/jni/Android.mk'
         }
-    }
+    } */
 
     lintOptions {
         checkReleaseBuilds false

@@ -119,6 +119,10 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
     public static final String PREF_RESIZE_KEYBOARD = "pref_resize_keyboard";
     public static final String PREF_KEYBOARD_HEIGHT_SCALE = "pref_keyboard_height_scale";
 
+	// swipe 
+	public static final String PREF_SPACE_TRACKPAD = "pref_space_trackpad";
+    public static final String PREF_DELETE_SWIPE = "pref_delete_swipe";
+
     // Emoji
     public static final String PREF_EMOJI_RECENT_KEYS = "emoji_recent_keys";
     public static final String PREF_EMOJI_CATEGORY_LAST_TYPED_ID = "emoji_category_last_typed_id";
@@ -422,6 +426,14 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
     public Set<String> readCorpusHandlesForPersonalization() {
         final Set<String> emptySet = Collections.emptySet();
         return mPrefs.getStringSet(PREF_CORPUS_HANDLES_FOR_PERSONALIZATION, emptySet);
+    }
+
+    public static boolean readSpaceTrackpadEnabled(final SharedPreferences prefs) {
+        return prefs.getBoolean(PREF_SPACE_TRACKPAD, true);
+    }
+
+    public static boolean readDeleteSwipeEnabled(final SharedPreferences prefs) {
+        return prefs.getBoolean(PREF_DELETE_SWIPE, true);
     }
 
     public static void writeEmojiRecentKeys(final SharedPreferences prefs, String str) {

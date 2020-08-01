@@ -14,6 +14,7 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
+localprops.aes
 
 # Eclipse project files
 .classpath
@@ -41,3 +42,4 @@ temp/
 keystore.*
 *.jks
 *.keystore
+*.aes

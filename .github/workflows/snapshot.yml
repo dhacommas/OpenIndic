@@ -1,0 +1,69 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+
+name: Build snapshot
+jobs:
+  build-and-deploy-snapshot:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: set up signing configs
+      run: chmod +x release/setup.sh && release/setup.sh "$KEY"
+      env:
+        KEY: ${{ secrets.KEY }}
+
+    - name: Generate cache key
+      run: chmod +x .github/checksum.sh && ./.github/checksum.sh checksum.txt
+
+    - name: Cache gradle modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches/modules-2
+        key: ${{ runner.os }}-gradlemodules-${{ hashFiles('checksum.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-gradlemodules-
+
+    - name: Cache gradle jars
+      uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches/jars-3
+        key: ${{ runner.os }}-gradlejars-${{ hashFiles('checksum.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-gradlejars-
+
+    - name: Cache gradle build
+      uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches/build-cache-1
+        key: ${{ runner.os }}-gradlebuildcache-${{ hashFiles('checksum.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-gradlebuildcache-
+
+    - name: Build snapshot
+      run: chmod +x gradlew ; ./gradlew assembleSnapshotRelease
+
+    - name: clean up signing configs
+      if: always()
+      run: chmod +x release/cleanup.sh && release/cleanup.sh
+
+    - name: Upload artifect
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenIndic Snapshot apk
+        path: app/build/outputs/apk/snapshot/release/OpenIndic-snapshot-arm64-v8a-release.apk
+
+    - name: Deploy to Telegram
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: OpenIndic Snapshot apk
+        document: app/build/outputs/apk/snapshot/release/OpenIndic-snapshot-arm64-v8a-release.apk
